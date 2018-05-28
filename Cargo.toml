@@ -1,0 +1,12 @@
+[package]
+name = "unifont"
+version = "0.1.0"
+authors = ["Mate Kovacs <mkovaxx@gmail.com>"]
+description = "Provides a monochrome Unicode bitmap font. Halfwidth glyphs are 8x16, fullwidth are 16x16 pixels."
+homepage = "https://gitlab.com/mkovacs/unifont-rs"
+repository = "https://gitlab.com/mkovacs/unifont-rs"
+readme = "README.md"
+keywords = ["monochrome", "unicode", "bitmap", "font", "8x16", "16x16"]
+categories = ["encoding"]
+
+[dependencies]
