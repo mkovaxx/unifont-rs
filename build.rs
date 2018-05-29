@@ -14,7 +14,6 @@ fn main() {
     let mut input_file = File::open(&input_path).unwrap();
     let mut input_reader = BufReader::new(&input_file);
     let mut glyph_map: BTreeMap<u16, String> = BTreeMap::new();
-    // TODO(mkovacs): enumerate contiguous ranges
     for line_result in input_reader.lines() {
         let line = line_result.unwrap();
         let code_point = u16::from_str_radix(&line[0..4], 16).unwrap();
@@ -22,15 +21,32 @@ fn main() {
         glyph_map.insert(code_point, data);
     }
 
+    // enumerate contiguous ranges
+    let mut ranges: Vec<(i32, i32)> = vec![];
+    let mut prev_code_point = -2;
+    for code_point_u16 in glyph_map.keys() {
+        let code_point = *code_point_u16 as i32;
+        if prev_code_point + 1 < code_point {
+            ranges.push((code_point, code_point + 1));
+        } else {
+            let i = ranges.len() - 1;
+            ranges[i].1 = code_point + 1;
+        }
+        prev_code_point = code_point;
+    }
+
     let output_dir = env::var("OUT_DIR").unwrap();
-    let output_path = Path::new(&output_dir).join("unifont.rs");
+    let output_path = Path::new(&output_dir).join("glyph_table.rs");
     let mut output_file = File::create(&output_path).unwrap();
 
-    writeln!(output_file, "pub fn get_glyph(code_point: usize) -> Option<&'static Glyph> {{");
-    writeln!(output_file, "    Some(&GLYPH_TABLE[code_point])");
-    writeln!(output_file, "}}");
+    writeln!(output_file, "const CODE_POINT_RANGES: [(usize, usize); {}] = [", ranges.len());
+    for (start, end) in ranges {
+        writeln!(output_file, "    ({}, {}),", start, end);
+    }
+    writeln!(output_file, "];");
+
     writeln!(output_file, "const GLYPH_TABLE: [Glyph; {}] = [", glyph_map.len());
-    for (code_point, data) in glyph_map {
+    for data in glyph_map.values() {
         match data.len() {
             32 => {
                 let u8s: Vec<String> =

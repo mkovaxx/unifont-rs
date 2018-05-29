@@ -1,6 +1,20 @@
 use glyph::Glyph;
 
-include!(concat!(env!("OUT_DIR"), "/unifont.rs"));
+pub fn get_glyph(code_point: usize) -> Option<&'static Glyph> {
+    let mut offset: usize = 0;
+    let mut result = None;
+    for (start, end) in CODE_POINT_RANGES.iter() {
+         if *start <= code_point && code_point < *end {
+             result = Some(&GLYPH_TABLE[offset + code_point - start]);
+             break;
+         } else {
+             offset += end - start;
+         }
+    }
+    result
+}
+
+include!(concat!(env!("OUT_DIR"), "/glyph_table.rs"));
 
 #[cfg(test)]
 mod tests {
