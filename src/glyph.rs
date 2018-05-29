@@ -27,7 +27,6 @@ impl Glyph {
 #[cfg(test)]
 mod tests {
     use std::iter::FromIterator;
-    use std::str::FromStr;
     use super::*;
 
     fn render(glyph: &Glyph) -> Vec<String> {
