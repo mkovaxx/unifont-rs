@@ -45,50 +45,31 @@ mod tests {
 
     #[test]
     fn glyph_a() {
-        let glyph = Glyph::HalfWidth([0x00, 0x00, 0x00, 0x00, 0x18, 0x24, 0x24, 0x42, 0x42, 0x7E, 0x42, 0x42, 0x42, 0x42, 0x00, 0x00]);
+        let glyph = Glyph::HalfWidth([
+            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3C, 0x42,
+            0x02, 0x3E, 0x42, 0x42, 0x46, 0x3A, 0x00, 0x00,
+        ]);
         assert_eq!(glyph.get_width(), 8);
         assert_eq!(render(&glyph), to_vec_string([
             "--------",
             "--------",
             "--------",
             "--------",
-            "---##---",
-            "--#--#--",
-            "--#--#--",
+            "--------",
+            "--------",
+            "--####--",
+            "-#----#-",
+            "------#-",
+            "--#####-",
             "-#----#-",
             "-#----#-",
-            "-######-",
-            "-#----#-",
-            "-#----#-",
-            "-#----#-",
-            "-#----#-",
+            "-#---##-",
+            "--###-#-",
             "--------",
             "--------",
         ]));
-    }
-
-    #[test]
-    fn glyph_b() {
-        let glyph = Glyph::HalfWidth([0x00, 0x00, 0x00, 0x00, 0x7C, 0x42, 0x42, 0x42, 0x7C, 0x42, 0x42, 0x42, 0x42, 0x7C, 0x00, 0x00]);
-        assert_eq!(glyph.get_width(), 8);
-        assert_eq!(render(&glyph), to_vec_string([
-            "--------",
-            "--------",
-            "--------",
-            "--------",
-            "-#####--",
-            "-#----#-",
-            "-#----#-",
-            "-#----#-",
-            "-#####--",
-            "-#----#-",
-            "-#----#-",
-            "-#----#-",
-            "-#----#-",
-            "-#####--",
-            "--------",
-            "--------",
-        ]));
+        assert_eq!(glyph.get_pixel(8, 5), false);
+        assert_eq!(glyph.get_pixel(3, 42), false);
     }
 
     #[test]
@@ -116,23 +97,6 @@ mod tests {
             "-----#-#--------",
             "------#---------",
         ]));
-    }
-
-    #[test]
-    fn halfwidth_get_pixel_out_of_bounds() {
-        let glyph = Glyph::HalfWidth([0x00, 0x00, 0x00, 0x00, 0x18, 0x24, 0x24, 0x42, 0x42, 0x7E, 0x42, 0x42, 0x42, 0x42, 0x00, 0x00]);
-        assert_eq!(glyph.get_width(), 8);
-        assert_eq!(glyph.get_pixel(8, 5), false);
-        assert_eq!(glyph.get_pixel(3, 42), false);
-    }
-
-    #[test]
-    fn fullwidth_get_pixel_out_of_bounds() {
-        let glyph = Glyph::FullWidth([
-            0x0200, 0x0100, 0x7FFE, 0x4002, 0x8004, 0x1FE0, 0x0040, 0x0080,
-            0x0100, 0xFFFE, 0x0100, 0x0100, 0x0100, 0x0100, 0x0500, 0x0200,
-        ]);
-        assert_eq!(glyph.get_width(), 16);
         assert_eq!(glyph.get_pixel(16, 5), false);
         assert_eq!(glyph.get_pixel(3, 42), false);
     }
