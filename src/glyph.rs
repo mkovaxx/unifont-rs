@@ -39,7 +39,7 @@ mod tests {
         }).collect()
     }
 
-    fn to_vec_string(s: [&str; 16]) -> Vec<String> {
+    fn vec_of_strings(s: [&str; 16]) -> Vec<String> {
         s.iter().map(|s| { s.to_string() }).collect()
     }
 
@@ -50,7 +50,7 @@ mod tests {
             0x02, 0x3E, 0x42, 0x42, 0x46, 0x3A, 0x00, 0x00,
         ]);
         assert_eq!(glyph.get_width(), 8);
-        assert_eq!(render(&glyph), to_vec_string([
+        assert_eq!(render(&glyph), vec_of_strings([
             "--------",
             "--------",
             "--------",
@@ -79,7 +79,7 @@ mod tests {
             0x0100, 0xFFFE, 0x0100, 0x0100, 0x0100, 0x0100, 0x0500, 0x0200,
         ]);
         assert_eq!(glyph.get_width(), 16);
-        assert_eq!(render(&glyph), to_vec_string([
+        assert_eq!(render(&glyph), vec_of_strings([
             "------#---------",
             "-------#--------",
             "-##############-",
