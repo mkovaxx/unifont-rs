@@ -1,3 +1,5 @@
 pub mod glyph;
-pub mod unifont;
+mod unifont;
 mod testutil;
+
+pub use unifont::get_glyph;
