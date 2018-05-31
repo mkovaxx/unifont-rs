@@ -39,13 +39,13 @@ fn main() {
     let output_path = Path::new(&output_dir).join("glyph_table.rs");
     let mut output_file = File::create(&output_path).unwrap();
 
-    writeln!(output_file, "const CODE_POINT_RANGES: [(usize, usize); {}] = [", ranges.len());
+    writeln!(output_file, "static CODE_POINT_RANGES: [(usize, usize); {}] = [", ranges.len());
     for (start, end) in ranges {
         writeln!(output_file, "    ({}, {}),", start, end);
     }
     writeln!(output_file, "];");
 
-    writeln!(output_file, "const GLYPH_TABLE: [Glyph; {}] = [", glyph_map.len());
+    writeln!(output_file, "static GLYPH_TABLE: [Glyph; {}] = [", glyph_map.len());
     for data in glyph_map.values() {
         match data.len() {
             32 => {

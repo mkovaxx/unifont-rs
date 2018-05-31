@@ -1,4 +1,5 @@
 use glyph::Glyph;
+use std::mem::size_of_val;
 
 pub fn get_glyph(code_point: usize) -> Option<&'static Glyph> {
     let mut offset: usize = 0;
@@ -12,6 +13,10 @@ pub fn get_glyph(code_point: usize) -> Option<&'static Glyph> {
          }
     }
     result
+}
+
+pub fn get_storage_size() -> usize {
+    size_of_val(&CODE_POINT_RANGES) + size_of_val(&GLYPH_TABLE)
 }
 
 include!(concat!(env!("OUT_DIR"), "/glyph_table.rs"));
