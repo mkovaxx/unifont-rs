@@ -1,7 +1,8 @@
 use glyph::Glyph;
 use std::mem::size_of_val;
 
-pub fn get_glyph(code_point: usize) -> Option<&'static Glyph> {
+pub fn get_glyph(c: char) -> Option<&'static Glyph> {
+    let code_point = c as usize;
     let mut offset: usize = 0;
     let mut result = None;
     for (start, end) in CODE_POINT_RANGES.iter() {
@@ -28,13 +29,13 @@ mod tests {
 
     #[test]
     fn glyph_a() {
-        let glyph = get_glyph('a' as usize).unwrap();
+        let glyph = get_glyph('a').unwrap();
         assert_eq!(glyph, &testutil::GLYPH_A);
     }
 
     #[test]
     fn glyph_ji() {
-        let glyph = get_glyph('字' as usize).unwrap();
+        let glyph = get_glyph('字').unwrap();
         assert_eq!(glyph, &testutil::GLYPH_JI);
     }
 }
