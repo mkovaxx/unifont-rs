@@ -7,6 +7,7 @@ description = "Provides a monochrome Unicode bitmap font. Halfwidth glyphs are 8
 homepage = "https://gitlab.com/mkovacs/unifont-rs"
 repository = "https://gitlab.com/mkovacs/unifont-rs"
 readme = "README.md"
+license = "MIT"
 keywords = ["monochrome", "unicode", "bitmap", "font", "8x16", "16x16"]
 categories = ["encoding"]
 
