@@ -10,5 +10,6 @@ readme = "README.md"
 license = "MIT"
 keywords = ["monochrome", "unicode", "bitmap", "font", "8x16", "16x16"]
 categories = ["encoding"]
+exclude = [".gitignore"]
 
 [dependencies]
