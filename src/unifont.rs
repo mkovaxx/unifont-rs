@@ -1,5 +1,6 @@
 use glyph::Glyph;
 use std::mem::size_of_val;
+use std::char::from_u32_unchecked;
 
 pub fn get_glyph(c: char) -> Option<&'static Glyph> {
     let code_point = c as usize;
@@ -14,6 +15,14 @@ pub fn get_glyph(c: char) -> Option<&'static Glyph> {
          }
     }
     result
+}
+
+pub fn enumerate_glyphs() -> Box<Iterator<Item=(char, &'static Glyph)>> {
+    let char_iterator = CODE_POINT_RANGES.iter()
+        .flat_map(|(start, end)| *start..*end)
+        .map(|code_point| unsafe { from_u32_unchecked(code_point as u32) });
+    let glyph_iterator = GLYPH_TABLE.iter();
+    Box::new(char_iterator.zip(glyph_iterator))
 }
 
 pub fn get_storage_size() -> usize {
@@ -37,5 +46,18 @@ mod tests {
     fn glyph_ji() {
         let glyph = get_glyph('字').unwrap();
         assert_eq!(glyph, &testutil::GLYPH_JI);
+    }
+
+    #[test]
+    fn enumeration() {
+        let glyph_a = get_glyph('a').unwrap();
+        let glyph_ji = get_glyph('字').unwrap();
+        for (c, glyph) in enumerate_glyphs() {
+            match c {
+                'a' => assert_eq!(glyph, glyph_a),
+                '字' => assert_eq!(glyph, glyph_ji),
+                _ => {},
+            }
+        }
     }
 }
