@@ -2,8 +2,7 @@
 
 [Unifont](https://en.wikipedia.org/wiki/GNU_Unifont) for Rust
 
-Provides a monochrome bitmap font that covers the entire Unicode Basic Multilingual Plane.
-Halfwidth glyphs are 8x16, fullwidth are 16x16 pixels.
+Provides a monochrome bitmap font that covers the entire Unicode Basic Multilingual Plane. Halfwidth glyphs are 8x16, fullwidth are 16x16 pixels.
 
 ## Goals
 
@@ -20,4 +19,33 @@ impl Glyph {
     pub fn get_pixel(&self, x: usize, y: usize) -> bool,
     pub fn get_width(&self) -> usize,
 }
+```
+
+## Example Code
+
+Example code is under `examples/banner.rs`.
+
+Run the binary with the following command:
+```
+cargo run --example banner UniFont
+```
+
+It will produce the following output:
+```
+                                                        
+                                                        
+                                                        
+                    #                                   
+ #    #             #    ######                    #    
+ #    #                  #                         #    
+ #    #  # ###     ##    #        ####   # ###     #    
+ #    #  ##   #     #    #       #    #  ##   #  #####  
+ #    #  #    #     #    #####   #    #  #    #    #    
+ #    #  #    #     #    #       #    #  #    #    #    
+ #    #  #    #     #    #       #    #  #    #    #    
+ #    #  #    #     #    #       #    #  #    #    #    
+ #    #  #    #     #    #       #    #  #    #    #    
+  ####   #    #   #####  #        ####   #    #     ##  
+                                                        
+                                                        
 ```
