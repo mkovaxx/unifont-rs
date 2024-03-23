@@ -1,6 +1,6 @@
 use std::iter::FromIterator;
 
-use glyph::Glyph;
+use crate::glyph::Glyph;
 
 pub const GLYPH_A: Glyph = Glyph::HalfWidth([
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3C, 0x42,

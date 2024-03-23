@@ -27,7 +27,7 @@ impl Glyph {
 
 #[cfg(test)]
 mod tests {
-    use testutil;
+    use crate::testutil;
 
     #[test]
     fn glyph_a() {

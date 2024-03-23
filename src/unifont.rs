@@ -1,4 +1,4 @@
-use glyph::Glyph;
+use crate::glyph::Glyph;
 use std::mem::size_of_val;
 use std::char::from_u32_unchecked;
 
@@ -17,7 +17,7 @@ pub fn get_glyph(c: char) -> Option<&'static Glyph> {
     result
 }
 
-pub fn enumerate_glyphs() -> Box<Iterator<Item=(char, &'static Glyph)>> {
+pub fn enumerate_glyphs() -> impl Iterator<Item=(char, &'static Glyph)> {
     let char_iterator = CODE_POINT_RANGES.iter()
         .flat_map(|(start, end)| *start..*end)
         .map(|code_point| unsafe { from_u32_unchecked(code_point as u32) });
@@ -33,7 +33,7 @@ include!(concat!(env!("OUT_DIR"), "/glyph_table.rs"));
 
 #[cfg(test)]
 mod tests {
-    use testutil;
+    use crate::testutil;
     use super::*;
 
     #[test]

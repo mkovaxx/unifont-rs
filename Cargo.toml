@@ -1,6 +1,7 @@
 [package]
 name = "unifont"
 version = "0.1.0"
+edition = "2021"
 build = "build.rs"
 authors = ["Mate Kovacs <mkovaxx@gmail.com>"]
 description = "Provides a monochrome Unicode bitmap font. Halfwidth glyphs are 8x16, fullwidth are 16x16 pixels."
@@ -12,4 +13,5 @@ keywords = ["monochrome", "unicode", "bitmap", "font"]
 categories = ["encoding"]
 exclude = [".gitignore"]
 
-[dependencies]
+[dev-dependencies]
+clap = { version = "4.5.3", features = ["derive"] }
