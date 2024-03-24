@@ -1,5 +1,5 @@
 use clap::Parser;
-use unifont::{get_glyph, get_arabic_presentation_forms, Glyph};
+use unifont::{get_glyph, get_arabic_contextual_form, Glyph};
 use unicode_bidi::BidiInfo;
 
 /// Simple program to render a text banner
@@ -27,7 +27,7 @@ fn main() {
     let line = para.range.clone();
     let display = bidi_info.reorder_line(para, line);
 
-    let arabic_corr = get_arabic_presentation_forms(&display);
+    let arabic_corr = get_arabic_contextual_form(&display);
     let glyphs: Vec<&Glyph> = arabic_corr.chars().map(|c| get_glyph(c).unwrap()).collect();
 
 
