@@ -39,39 +39,46 @@ fn main() {
     let output_path = Path::new(&output_dir).join("glyph_table.rs");
     let mut output_file = File::create(&output_path).unwrap();
 
-    writeln!(output_file, "static CODE_POINT_RANGES: [(usize, usize); {}] = [", ranges.len());
+    writeln!(
+        output_file,
+        "static CODE_POINT_RANGES: [(usize, usize); {}] = [",
+        ranges.len()
+    );
     for (start, end) in ranges {
         writeln!(output_file, "    ({}, {}),", start, end);
     }
     writeln!(output_file, "];");
 
-    writeln!(output_file, "static GLYPH_TABLE: [Glyph; {}] = [", glyph_map.len());
+    writeln!(
+        output_file,
+        "static GLYPH_TABLE: [Glyph; {}] = [",
+        glyph_map.len()
+    );
     for data in glyph_map.values() {
         match data.len() {
             32 => {
-                let u8s: Vec<String> =
-                    Vec::from_iter(data.chars())
-                        .chunks(2)
-                        .map(|chunk| {
-                            let hex: String = chunk.iter().cloned().collect();
-                            format!("0x{}", hex)
-                        })
-                        .collect();
+                let u8s: Vec<String> = Vec::from_iter(data.chars())
+                    .chunks(2)
+                    .map(|chunk| {
+                        let hex: String = chunk.iter().cloned().collect();
+                        format!("0x{}", hex)
+                    })
+                    .collect();
                 writeln!(output_file, "    Glyph::HalfWidth([{}]),", u8s.join(", "));
-            },
+            }
             64 => {
-                let u16s: Vec<String> =
-                    Vec::from_iter(data.chars())
-                        .chunks(4)
-                        .map(|chunk| {
-                            let hex: String = chunk.iter().cloned().collect();
-                            format!("0x{}", hex)
-                        }).collect();
+                let u16s: Vec<String> = Vec::from_iter(data.chars())
+                    .chunks(4)
+                    .map(|chunk| {
+                        let hex: String = chunk.iter().cloned().collect();
+                        format!("0x{}", hex)
+                    })
+                    .collect();
                 writeln!(output_file, "    Glyph::FullWidth([{}]),", u16s.join(", "));
-            },
+            }
             _ => {
                 writeln!(output_file, "ERROR: invalid glyph data: {}", data);
-            },
+            }
         }
     }
     writeln!(output_file, "];");
