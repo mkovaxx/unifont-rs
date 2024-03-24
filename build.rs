@@ -11,7 +11,7 @@ use std::str::FromStr;
 fn main() {
     let input_dir = env::current_dir().unwrap();
     let input_path = Path::new(&input_dir).join("data/unifont-10.0.07.hex");
-    let input_file = File::open(&input_path).unwrap();
+    let input_file = File::open(input_path).unwrap();
     let input_reader = BufReader::new(&input_file);
     let mut glyph_map: BTreeMap<u16, String> = BTreeMap::new();
     for line_result in input_reader.lines() {
@@ -37,23 +37,25 @@ fn main() {
 
     let output_dir = env::var("OUT_DIR").unwrap();
     let output_path = Path::new(&output_dir).join("glyph_table.rs");
-    let mut output_file = File::create(&output_path).unwrap();
+    let mut output_file = File::create(output_path).unwrap();
 
     writeln!(
         output_file,
         "static CODE_POINT_RANGES: [(usize, usize); {}] = [",
         ranges.len()
-    );
+    )
+    .unwrap();
     for (start, end) in ranges {
-        writeln!(output_file, "    ({}, {}),", start, end);
+        writeln!(output_file, "    ({}, {}),", start, end).unwrap();
     }
-    writeln!(output_file, "];");
+    writeln!(output_file, "];").unwrap();
 
     writeln!(
         output_file,
         "static GLYPH_TABLE: [Glyph; {}] = [",
         glyph_map.len()
-    );
+    )
+    .unwrap();
     for data in glyph_map.values() {
         match data.len() {
             32 => {
@@ -64,7 +66,7 @@ fn main() {
                         format!("0x{}", hex)
                     })
                     .collect();
-                writeln!(output_file, "    Glyph::HalfWidth([{}]),", u8s.join(", "));
+                writeln!(output_file, "    Glyph::HalfWidth([{}]),", u8s.join(", ")).unwrap();
             }
             64 => {
                 let u16s: Vec<String> = Vec::from_iter(data.chars())
@@ -74,12 +76,12 @@ fn main() {
                         format!("0x{}", hex)
                     })
                     .collect();
-                writeln!(output_file, "    Glyph::FullWidth([{}]),", u16s.join(", "));
+                writeln!(output_file, "    Glyph::FullWidth([{}]),", u16s.join(", ")).unwrap();
             }
             _ => {
-                writeln!(output_file, "ERROR: invalid glyph data: {}", data);
+                writeln!(output_file, "ERROR: invalid glyph data: {}", data).unwrap();
             }
         }
     }
-    writeln!(output_file, "];");
+    writeln!(output_file, "];").unwrap();
 }
