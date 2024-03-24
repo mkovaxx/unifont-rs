@@ -30,34 +30,3 @@ pub fn get_storage_size() -> usize {
 }
 
 include!(concat!(env!("OUT_DIR"), "/glyph_table.rs"));
-
-#[cfg(test)]
-mod tests {
-    use crate::testutil;
-    use super::*;
-
-    #[test]
-    fn glyph_a() {
-        let glyph = get_glyph('a').unwrap();
-        assert_eq!(glyph, &testutil::GLYPH_A);
-    }
-
-    #[test]
-    fn glyph_ji() {
-        let glyph = get_glyph('字').unwrap();
-        assert_eq!(glyph, &testutil::GLYPH_JI);
-    }
-
-    #[test]
-    fn enumeration() {
-        let glyph_a = get_glyph('a').unwrap();
-        let glyph_ji = get_glyph('字').unwrap();
-        for (c, glyph) in enumerate_glyphs() {
-            match c {
-                'a' => assert_eq!(glyph, glyph_a),
-                '字' => assert_eq!(glyph, glyph_ji),
-                _ => {},
-            }
-        }
-    }
-}

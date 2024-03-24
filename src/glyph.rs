@@ -24,26 +24,3 @@ impl Glyph {
         }
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use crate::testutil;
-
-    #[test]
-    fn glyph_a() {
-        let glyph = testutil::GLYPH_A;
-        assert_eq!(glyph.get_width(), 8);
-        assert_eq!(testutil::render(&glyph), testutil::GLYPH_A_SHAPE);
-        assert_eq!(glyph.get_pixel(8, 5), false);
-        assert_eq!(glyph.get_pixel(3, 42), false);
-    }
-
-    #[test]
-    fn glyph_ji() {
-        let glyph = testutil::GLYPH_JI;
-        assert_eq!(glyph.get_width(), 16);
-        assert_eq!(testutil::render(&glyph), testutil::GLYPH_JI_SHAPE);
-        assert_eq!(glyph.get_pixel(16, 5), false);
-        assert_eq!(glyph.get_pixel(3, 42), false);
-    }
-}

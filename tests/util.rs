@@ -1,6 +1,4 @@
-use std::iter::FromIterator;
-
-use crate::glyph::Glyph;
+use unifont::Glyph;
 
 pub const GLYPH_A: Glyph = Glyph::HalfWidth([
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3C, 0x42,
@@ -57,8 +55,4 @@ pub fn render(glyph: &Glyph) -> Vec<String> {
             if glyph.get_pixel(x, y) { '#' } else { '-' }
         }))
     }).collect()
-}
-
-fn vec_of_strings(s: [&str; 16]) -> Vec<String> {
-    s.iter().map(|s| { s.to_string() }).collect()
 }
