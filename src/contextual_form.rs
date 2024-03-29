@@ -1,12 +1,4 @@
-struct ArabicForm {
-    isolated: u32,
-    final_: u32,
-    initial: Option<u32>,
-    medial: Option<u32>,
-    // NOTE: a tuple of two optional u32 values, representing the special initial and final forms for Lam-Alif combinations
-    special: Option<(Option<u32>, Option<u32>)>,
-}
-
+const NONE: u32 = u32::MAX;
 const AR_START: u32 = 0x621;
 const AR_END: u32 = 0x64A;
 const UNICODE_LAM: u32 = 0x644;
@@ -15,7 +7,6 @@ pub fn get_arabic_contextual_form(input: &str) -> String {
     let mut result = String::new();
     let mut next_char: char = '\0'; // Initial 'previous' character
 
-    // Since we're working with chars directly, we reverse iterate over the input as chars, not code points
     let chars: Vec<char> = input.chars().collect();
 
     for i in 0..chars.len() {
@@ -35,302 +26,50 @@ pub fn get_arabic_contextual_form(input: &str) -> String {
 
     result
 }
-
-static ARABIC_FORMS_B: [ArabicForm; 42] = [
-    ArabicForm {
-        isolated: 0xFE80,
-        final_: 0xFE80,
-        initial: None,
-        medial: None,
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFE81,
-        final_: 0xFE82,
-        initial: None,
-        medial: None,
-        special: Some((Some(0xFEF5), Some(0xFEF6))),
-    },
-    ArabicForm {
-        isolated: 0xFE83,
-        final_: 0xFE84,
-        initial: None,
-        medial: None,
-        special: Some((Some(0xFEF7), Some(0xFEF8))),
-    },
-    ArabicForm {
-        isolated: 0xFE85,
-        final_: 0xFE86,
-        initial: None,
-        medial: None,
-        special: Some((Some(0xFEF9), Some(0xFEFA))),
-    },
-    ArabicForm {
-        isolated: 0xFE87,
-        final_: 0xFE88,
-        initial: None,
-        medial: None,
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFE89,
-        final_: 0xFE8A,
-        initial: Some(0xFE8B),
-        medial: Some(0xFE8C),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFE8D,
-        final_: 0xFE8E,
-        initial: None,
-        medial: None,
-        special: Some((Some(0xFEFB), Some(0xFEFC))),
-    },
-    ArabicForm {
-        isolated: 0xFE8F,
-        final_: 0xFE90,
-        initial: Some(0xFE91),
-        medial: Some(0xFE92),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFE93,
-        final_: 0xFE94,
-        initial: None,
-        medial: None,
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFE95,
-        final_: 0xFE96,
-        initial: Some(0xFE97),
-        medial: Some(0xFE98),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFE99,
-        final_: 0xFE9A,
-        initial: Some(0xFE9B),
-        medial: Some(0xFE9C),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFE9D,
-        final_: 0xFE9E,
-        initial: Some(0xFE9F),
-        medial: Some(0xFEA0),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEA1,
-        final_: 0xFEA2,
-        initial: Some(0xFEA3),
-        medial: Some(0xFEA4),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEA5,
-        final_: 0xFEA6,
-        initial: Some(0xFEA7),
-        medial: Some(0xFEA8),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEA9,
-        final_: 0xFEAA,
-        initial: None,
-        medial: None,
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEAB,
-        final_: 0xFEAC,
-        initial: None,
-        medial: None,
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEAD,
-        final_: 0xFEAE,
-        initial: None,
-        medial: None,
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEAF,
-        final_: 0xFEB0,
-        initial: None,
-        medial: None,
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEB1,
-        final_: 0xFEB2,
-        initial: Some(0xFEB3),
-        medial: Some(0xFEB4),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEB5,
-        final_: 0xFEB6,
-        initial: Some(0xFEB7),
-        medial: Some(0xFEB8),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEB9,
-        final_: 0xFEBA,
-        initial: Some(0xFEBB),
-        medial: Some(0xFEBC),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEBD,
-        final_: 0xFEBE,
-        initial: Some(0xFEBF),
-        medial: Some(0xFEC0),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEC1,
-        final_: 0xFEC2,
-        initial: Some(0xFEC3),
-        medial: Some(0xFEC4),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEC5,
-        final_: 0xFEC6,
-        initial: Some(0xFEC7),
-        medial: Some(0xFEC8),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEC9,
-        final_: 0xFECA,
-        initial: Some(0xFECB),
-        medial: Some(0xFECC),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFECD,
-        final_: 0xFECE,
-        initial: Some(0xFECF),
-        medial: Some(0xFED0),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0,
-        final_: 0,
-        initial: None,
-        medial: None,
-        special: None,
-    }, // NOTE: Placeholders for unused entries
-    ArabicForm {
-        isolated: 0,
-        final_: 0,
-        initial: None,
-        medial: None,
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0,
-        final_: 0,
-        initial: None,
-        medial: None,
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0,
-        final_: 0,
-        initial: None,
-        medial: None,
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0,
-        final_: 0,
-        initial: None,
-        medial: None,
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0x640,
-        final_: 0x640,
-        initial: Some(0x640),
-        medial: Some(0x640),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFED1,
-        final_: 0xFED2,
-        initial: Some(0xFED3),
-        medial: Some(0xFED4),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFED5,
-        final_: 0xFED6,
-        initial: Some(0xFED7),
-        medial: Some(0xFED8),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFED9,
-        final_: 0xFEDA,
-        initial: Some(0xFEDB),
-        medial: Some(0xFEDC),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEDD,
-        final_: 0xFEDE,
-        initial: Some(0xFEDF),
-        medial: Some(0xFEE0),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEE1,
-        final_: 0xFEE2,
-        initial: Some(0xFEE3),
-        medial: Some(0xFEE4),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEE5,
-        final_: 0xFEE6,
-        initial: Some(0xFEE7),
-        medial: Some(0xFEE8),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEE9,
-        final_: 0xFEEA,
-        initial: Some(0xFEEB),
-        medial: Some(0xFEEC),
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEED,
-        final_: 0xFEEE,
-        initial: None,
-        medial: None,
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEEF,
-        final_: 0xFEF0,
-        initial: None,
-        medial: None,
-        special: None,
-    },
-    ArabicForm {
-        isolated: 0xFEF1,
-        final_: 0xFEF2,
-        initial: Some(0xFEF3),
-        medial: Some(0xFEF4),
-        special: None,
-    },
+// Arabic contextual forms [isolated, final, initial, medial, isolated_lam, final_lam]
+static ARABIC_FORMS: [[u32; 6]; 42] = [
+    [ 0xFE80, 0xFE80, NONE, NONE, NONE, NONE],
+    [ 0xFE81, 0xFE82, NONE, NONE, 0xFEF5, 0xFEF6],
+    [ 0xFE83, 0xFE84, NONE, NONE, 0xFEF7, 0xFEF8],
+    [ 0xFE85, 0xFE86, NONE, NONE, 0xFEF9, 0xFEFA],
+    [ 0xFE87, 0xFE88, NONE, NONE, NONE, NONE],
+    [ 0xFE89, 0xFE8A, 0xFE8B, 0xFE8C, NONE, NONE],
+    [ 0xFE8D, 0xFE8E, NONE, NONE, 0xFEFB, 0xFEFC],
+    [ 0xFE8F, 0xFE90, 0xFE91, 0xFE92, NONE, NONE],
+    [ 0xFE93, 0xFE94, NONE, NONE, NONE, NONE],
+    [ 0xFE95, 0xFE96, 0xFE97, 0xFE98, NONE, NONE],
+    [ 0xFE99, 0xFE9A, 0xFE9B, 0xFE9C, NONE, NONE],
+    [ 0xFE9D, 0xFE9E, 0xFE9F, 0xFEA0, NONE, NONE],
+    [ 0xFEA1, 0xFEA2, 0xFEA3, 0xFEA4, NONE, NONE],
+    [ 0xFEA5, 0xFEA6, 0xFEA7, 0xFEA8, NONE, NONE],
+    [ 0xFEA9, 0xFEAA, NONE, NONE, NONE, NONE],
+    [ 0xFEAB, 0xFEAC, NONE, NONE, NONE, NONE],
+    [ 0xFEAD, 0xFEAE, NONE, NONE, NONE, NONE],
+    [ 0xFEAF, 0xFEB0, NONE, NONE, NONE, NONE],
+    [ 0xFEB1, 0xFEB2, 0xFEB3, 0xFEB4, NONE, NONE],
+    [ 0xFEB5, 0xFEB6, 0xFEB7, 0xFEB8, NONE, NONE],
+    [ 0xFEB9, 0xFEBA, 0xFEBB, 0xFEBC, NONE, NONE],
+    [ 0xFEBD, 0xFEBE, 0xFEBF, 0xFEC0, NONE, NONE],
+    [ 0xFEC1, 0xFEC2, 0xFEC3, 0xFEC4, NONE, NONE],
+    [ 0xFEC5, 0xFEC6, 0xFEC7, 0xFEC8, NONE, NONE],
+    [ 0xFEC9, 0xFECA, 0xFECB, 0xFECC, NONE, NONE],
+    [ 0xFECD, 0xFECE, 0xFECF, 0xFED0, NONE, NONE],
+    [ 0, 0, NONE, NONE, NONE, NONE],
+    [ 0, 0, NONE, NONE, NONE, NONE],
+    [ 0, 0, NONE, NONE, NONE, NONE],
+    [ 0, 0, NONE, NONE, NONE, NONE],
+    [ 0, 0, NONE, NONE, NONE, NONE],
+    [ 0x640, 0x640, 0x640, 0x640, NONE, NONE],
+    [ 0xFED1, 0xFED2, 0xFED3, 0xFED4, NONE, NONE],
+    [ 0xFED5, 0xFED6, 0xFED7, 0xFED8, NONE, NONE],
+    [ 0xFED9, 0xFEDA, 0xFEDB, 0xFEDC, NONE, NONE],
+    [ 0xFEDD, 0xFEDE, 0xFEDF, 0xFEE0, NONE, NONE],
+    [ 0xFEE1, 0xFEE2, 0xFEE3, 0xFEE4, NONE, NONE],
+    [ 0xFEE5, 0xFEE6, 0xFEE7, 0xFEE8, NONE, NONE],
+    [ 0xFEE9, 0xFEEA, 0xFEEB, 0xFEEC, NONE, NONE],
+    [ 0xFEED, 0xFEEE, NONE, NONE, NONE, NONE],
+    [ 0xFEEF, 0xFEF0, NONE, NONE, NONE, NONE],
+    [ 0xFEF1, 0xFEF2, 0xFEF3, 0xFEF4, NONE, NONE],
 ];
 
 fn get_contextual_form_of_char(prev: char, next: char, c: char) -> Option<u32> {
@@ -352,32 +91,18 @@ fn get_contextual_form_of_char(prev: char, next: char, c: char) -> Option<u32> {
     let target = ((((is_lapl || is_arabic_letter(next_cp)) && is_linking_type(cp)) as u32) << 1)
         | is_linking_type(prev_cp) as u32;
 
-    if let Some(form) = ARABIC_FORMS_B.get(ref_index as usize) {
+    if let Some(form) = ARABIC_FORMS.get(ref_index as usize) {
         if is_lapl {
             if is_apl {
                 // Already handled by is_la
                 return None;
             }
-            // Use the special form for Lam-Alif
-            return form
-                .special
-                .and_then(|(_, special_initial)| special_initial.or(Some(form.isolated)));
+            if form[5] == NONE {
+                return None;
+            }
+            return form[5].into();
         }
-        println!(
-            "c: {}, index: {}, prev: {}, prevLink: {}",
-            c,
-            target,
-            prev,
-            is_linking_type(prev_cp)
-        );
-        // perhaps there is a better way to handle this
-        match target {
-            0 => Some(form.isolated),                  // Non-linking, isolated form
-            1 => Some(form.final_), // Final form, if 'prev' is non-linking but 'cp' is linking
-            2 => form.initial.or(Some(form.isolated)), // Initial form, if 'next' is linking
-            3 => form.medial.or(Some(form.isolated)), // Medial form, if both 'prev' and 'next' are linking
-            _ => Some(form.isolated), // Fallback to isolated form for unexpected index values
-        }
+        return Some(form[target as usize]);
     } else {
         None // Form not found
     }
@@ -389,8 +114,8 @@ fn is_arabic_letter(cp: u32) -> bool {
 
 fn is_lam_alif(cp: u32, next: u32) -> bool {
     if cp == UNICODE_LAM && is_arabic_letter(next) {
-        if let Some(form) = ARABIC_FORMS_B.get((next - AR_START) as usize) {
-            return form.special.map_or(false, |(_, initial)| initial.is_some());
+        if let Some(form) = ARABIC_FORMS.get((next - AR_START) as usize) {
+            return form[5] != NONE;
         }
     }
     false
@@ -398,8 +123,8 @@ fn is_lam_alif(cp: u32, next: u32) -> bool {
 
 fn is_alif_after_lam(prev: u32, cp: u32) -> bool {
     if prev == UNICODE_LAM && is_arabic_letter(cp) {
-        if let Some(form) = ARABIC_FORMS_B.get((cp - AR_START) as usize) {
-            return form.special.map_or(false, |(_, initial)| initial.is_some());
+        if let Some(form) = ARABIC_FORMS.get((cp - AR_START) as usize) {
+            return form[5] != NONE;
         }
     }
     false
@@ -407,8 +132,8 @@ fn is_alif_after_lam(prev: u32, cp: u32) -> bool {
 
 fn is_linking_type(cp: u32) -> bool {
     if is_arabic_letter(cp) {
-        if let Some(form) = ARABIC_FORMS_B.get((cp - AR_START) as usize) {
-            return form.medial.is_some();
+        if let Some(form) = ARABIC_FORMS.get((cp - AR_START) as usize) {
+            return form[3] != NONE;
         }
     }
     false
