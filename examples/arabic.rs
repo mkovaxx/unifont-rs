@@ -12,7 +12,7 @@ struct Args {
     text: String,
 
     /// Character to use as foreground
-    #[arg(short, long, default_value = "$")]
+    #[arg(short, long, default_value = "#")]
     foreground: char,
 
     /// Character to use as background
