@@ -10,7 +10,7 @@ use std::str::FromStr;
 
 fn main() {
     let input_dir = env::current_dir().unwrap();
-    let input_path = Path::new(&input_dir).join("data/unifont-10.0.07.hex");
+    let input_path = Path::new(&input_dir).join("data/unifont.hex");
     let input_file = File::open(input_path).unwrap();
     let input_reader = BufReader::new(&input_file);
     let mut glyph_map: BTreeMap<u16, String> = BTreeMap::new();
