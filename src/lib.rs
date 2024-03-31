@@ -1,9 +1,7 @@
 use std::char::from_u32_unchecked;
 use std::mem::size_of_val;
-
-// FIXME: Needs to be moved?
-mod contextual_form;
-pub use contextual_form::get_arabic_contextual_form;
+pub mod scripts;
+pub mod bidi;
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum Glyph {

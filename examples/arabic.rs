@@ -1,6 +1,7 @@
 use clap::Parser;
-use unifont::{get_glyph, get_arabic_contextual_form, Glyph};
-use unicode_bidi::BidiInfo;
+use unifont::{get_glyph, Glyph};
+use unifont::bidi::process_bidi_text; 
+use unifont::scripts::arabic::get_arabic_contextual_form;
 
 /// Simple program to render a text banner
 #[derive(Parser, Debug)]
@@ -21,15 +22,14 @@ struct Args {
 
 fn main() {
     let args = Args::parse();
-    let text = args.text.clone();
-    let bidi_info = BidiInfo::new(&text, None);
-    let para = &bidi_info.paragraphs[0];
-    let line = para.range.clone();
-    let display = bidi_info.reorder_line(para, line);
 
-    let arabic_corr = get_arabic_contextual_form(&display);
-    let glyphs: Vec<&Glyph> = arabic_corr.chars().map(|c| get_glyph(c).unwrap()).collect();
+    // Now using the `process_bidi_text` function for bidi processing
+    let bidi_processed_text = process_bidi_text(&args.text);
 
+    // Applying Arabic contextual forms processing
+    let arabic_corrected_text = get_arabic_contextual_form(&bidi_processed_text);
+
+    let glyphs: Vec<&Glyph> = arabic_corrected_text.chars().map(|c| get_glyph(c).unwrap()).collect();
 
     for y in 0..16 {
         for glyph in &glyphs {
