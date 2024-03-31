@@ -1,5 +1,7 @@
-use std::char::from_u32_unchecked;
-use std::mem::size_of_val;
+#![no_std]
+
+use core::char::from_u32_unchecked;
+use core::mem::size_of_val;
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum Glyph {
