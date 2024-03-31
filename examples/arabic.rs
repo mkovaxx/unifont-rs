@@ -3,7 +3,7 @@ use unifont::{get_glyph, Glyph};
 use unifont::bidi::process_bidi_text; 
 use unifont::scripts::arabic::get_arabic_contextual_form;
 
-/// Simple program to render a text banner
+/// Simple program to render an Arabic text banner
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 struct Args {

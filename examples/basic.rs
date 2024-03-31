@@ -1,7 +1,7 @@
 use clap::Parser;
 use unifont::{get_glyph, Glyph};
 
-/// Simple program to render a text banner
+/// Simple program to render a basic text banner
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 struct Args {
