@@ -1,6 +1,6 @@
 [package]
 name = "unifont"
-version = "1.0.0"
+version = "1.0.0+data-15.1.05"
 edition = "2021"
 build = "build.rs"
 authors = ["The Unifont-rs Contributors"]
