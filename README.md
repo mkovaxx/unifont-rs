@@ -14,17 +14,18 @@ Provides a monochrome bitmap font that covers the entire Unicode Basic Multiling
 ## API
 
 ```rust
-pub fn get_glyph(c: char) -> Option<&'static Glyph> { /* ... */ }
-pub fn enumerate_glyphs() -> impl Iterator<Item = (char, &'static Glyph)> { /* ... */ }
+fn get_glyph(c: char) -> Option<&'static Glyph>;
+fn enumerate_glyphs() -> impl Iterator<Item = (char, &'static Glyph)>;
 
-pub enum Glyph {
-    HalfWidth([u8; 16]),
-    FullWidth([u16; 16]),
+enum Glyph {
+    Halfwidth([u8; 16]),
+    Fullwidth([u16; 16]),
 }
 
 impl Glyph {
-    pub fn get_pixel(&self, x: usize, y: usize) -> bool,
-    pub fn get_width(&self) -> usize,
+    fn get_pixel(&self, x: usize, y: usize) -> bool;
+    fn get_width(&self) -> usize;
+    fn is_fullwidth(&self) -> bool;
 }
 ```
 

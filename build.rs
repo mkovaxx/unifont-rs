@@ -66,7 +66,7 @@ fn main() {
                         format!("0x{}", hex)
                     })
                     .collect();
-                writeln!(output_file, "    Glyph::HalfWidth([{}]),", u8s.join(", ")).unwrap();
+                writeln!(output_file, "    Glyph::Halfwidth([{}]),", u8s.join(", ")).unwrap();
             }
             64 => {
                 let u16s: Vec<String> = Vec::from_iter(data.chars())
@@ -76,7 +76,7 @@ fn main() {
                         format!("0x{}", hex)
                     })
                     .collect();
-                writeln!(output_file, "    Glyph::FullWidth([{}]),", u16s.join(", ")).unwrap();
+                writeln!(output_file, "    Glyph::Fullwidth([{}]),", u16s.join(", ")).unwrap();
             }
             _ => {
                 writeln!(output_file, "ERROR: invalid glyph data: {}", data).unwrap();

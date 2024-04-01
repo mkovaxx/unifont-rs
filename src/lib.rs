@@ -5,23 +5,30 @@ use core::mem::size_of_val;
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum Glyph {
-    HalfWidth([u8; 16]),
-    FullWidth([u16; 16]),
+    Halfwidth([u8; 16]),
+    Fullwidth([u16; 16]),
 }
 
 impl Glyph {
     pub fn get_pixel(&self, x: usize, y: usize) -> bool {
         y < 16
             && match self {
-                Glyph::HalfWidth(rows) => x < 8 && rows[y] & (0x80 >> x) != 0,
-                Glyph::FullWidth(rows) => x < 16 && rows[y] & (0x8000 >> x) != 0,
+                Glyph::Halfwidth(rows) => x < 8 && rows[y] & (0x80 >> x) != 0,
+                Glyph::Fullwidth(rows) => x < 16 && rows[y] & (0x8000 >> x) != 0,
             }
     }
 
     pub fn get_width(&self) -> usize {
         match self {
-            Glyph::HalfWidth(_) => 8,
-            Glyph::FullWidth(_) => 16,
+            Glyph::Halfwidth(_) => 8,
+            Glyph::Fullwidth(_) => 16,
+        }
+    }
+
+    pub fn is_fullwidth(&self) -> bool {
+        match self {
+            Glyph::Halfwidth(_) => false,
+            Glyph::Fullwidth(_) => true,
         }
     }
 }
