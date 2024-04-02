@@ -30,12 +30,12 @@ impl Glyph {
 ```
 
 ## Example Code
-
-Example code is under `examples/banner.rs`.
+### Basic usage
+Example code is under `examples/basic.rs`.
 
 Run the binary with the following command:
-```sh
-cargo run --example banner UniFont
+```
+cargo run --example basic UniFont
 ```
 
 It will produce the following output:
@@ -56,6 +56,36 @@ It will produce the following output:
   ####   #    #   #####  #        ####   #    #     ##  
                                                         
                                                         
+```
+
+### Usage with Arabic
+_NOTE: This library handles Arabic scripts, but you need to use the Arabic processors as shown in this example._
+
+Example code is under `examples/arabic.rs`.
+Run the binary with the following command:
+```
+cargo run --example arabic 'أبجد ABC ١٢٣ لا 123'
+```
+
+It will produce the following output:
+```
+                                                                                                                                           ##   
+                                                                                                                                          #     
+                                                                                                                                           ##   
+                                      #           #       #   #  #  #  #                                                                  #     
+    #     ####    ####                #           #       #  #   # #  #            ##    #####    ####                                      #   
+   ##    #    #  #    #           #   #            #       ##     ####            #  #   #    #  #    #                                     #   
+  # #    #    #  #    #            #  #            #       #      #               #  #   #    #  #    #             #                       #   
+    #         #       #             # #             #       #      #             #    #  #    #  #                   #              #       #   
+    #       ##     ###              ###             #       #      #             #    #  #####   #                    #   ###        #      #   
+    #      #          #             # #              #       #      #            ######  #    #  #               #    #      ##      #      #   
+    #     #           #            #  ##             #       #      #            #    #  #    #  #               #####################      #   
+    #    #       #    #          ##                  #       #      #            #    #  #    #  #    #                                         
+    #    #       #    #                                                          #    #  #    #  #    #                    #                    
+  #####  ######   ####                                                           #    #  #####    ####                             #            
+                                                                                                                                                
+                                                                                                                                                
+                                                  
 ```
 
 ## How it Works

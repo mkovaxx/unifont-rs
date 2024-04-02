@@ -1,5 +1,7 @@
 #![no_std]
 
+pub mod scripts;
+pub mod bidi;
 use core::char::from_u32_unchecked;
 use core::mem::size_of_val;
 
