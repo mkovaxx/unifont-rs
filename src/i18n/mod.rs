@@ -9,14 +9,14 @@ pub fn preprocess_text(chars: &mut [char]) {
 }
 
 fn preprocess_arabic_text(chars: &mut [char]) {
-    use self::arabic::{get_arabic_contextual_form, is_arabic_letter};
+    use self::arabic::{fix_arabic_contextual_forms, is_arabic_letter};
 
     // find maximal spans that consist of Arabic and whitespace
     let spans = chars.split_mut(|c| !c.is_whitespace() && !is_arabic_letter(*c as u32));
 
     for span in spans {
         let trimmed = whitespace_trimmed(span);
-        get_arabic_contextual_form(trimmed);
+        fix_arabic_contextual_forms(trimmed);
         trimmed.reverse();
     }
 }

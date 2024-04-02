@@ -3,7 +3,7 @@ const AR_START: u32 = 0x621;
 const AR_END: u32 = 0x64A;
 const UNICODE_LAM: u32 = 0x644;
 
-pub fn get_arabic_contextual_form(chars: &mut [char]) {
+pub fn fix_arabic_contextual_forms(chars: &mut [char]) {
     let mut prev_char: char = '\0'; // Initial 'previous' character
 
     for i in 0..chars.len() {
