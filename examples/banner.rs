@@ -1,9 +1,7 @@
 use clap::Parser;
 use unifont::{get_glyph, Glyph};
-use unifont::bidi::process_bidi_text; 
-use unifont::scripts::arabic::get_arabic_contextual_form;
 
-/// Simple program to render an Arabic text banner
+/// Simple program to render a basic text banner
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 struct Args {
@@ -23,13 +21,11 @@ struct Args {
 fn main() {
     let args = Args::parse();
 
-    // Now using the `process_bidi_text` function for bidi processing
-    let bidi_processed_text = process_bidi_text(&args.text);
+    let mut chars: Vec<char> = args.text.chars().collect();
+    // Prepare the character sequence for simple (glyph-by-glyph) rendering
+    unifont::i18n::preprocess_text(&mut chars);
 
-    // Applying Arabic contextual forms processing
-    let arabic_corrected_text = get_arabic_contextual_form(&bidi_processed_text);
-
-    let glyphs: Vec<&Glyph> = arabic_corrected_text.chars().map(|c| get_glyph(c).unwrap()).collect();
+    let glyphs: Vec<&Glyph> = chars.into_iter().map(|c| get_glyph(c).unwrap()).collect();
 
     for y in 0..16 {
         for glyph in &glyphs {

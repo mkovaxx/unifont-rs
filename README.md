@@ -58,34 +58,33 @@ It will produce the following output:
                                                         
 ```
 
-### Usage with Arabic
-_NOTE: This library handles Arabic scripts, but you need to use the Arabic processors as shown in this example._
+### i18n (Internationalization)
 
-Example code is under `examples/arabic.rs`.
-Run the binary with the following command:
+Basic preprocessing is provided for displaying text in non-Latin scripts, such as Arabic.
+
+For example, run the example as follows:
 ```
-cargo run --example arabic 'أبجد ABC ١٢٣ لا 123'
+cargo run --example banner "أبجد"
 ```
 
 It will produce the following output:
 ```
-                                                                                                                                           ##   
-                                                                                                                                          #     
-                                                                                                                                           ##   
-                                      #           #       #   #  #  #  #                                                                  #     
-    #     ####    ####                #           #       #  #   # #  #            ##    #####    ####                                      #   
-   ##    #    #  #    #           #   #            #       ##     ####            #  #   #    #  #    #                                     #   
-  # #    #    #  #    #            #  #            #       #      #               #  #   #    #  #    #             #                       #   
-    #         #       #             # #             #       #      #             #    #  #    #  #                   #              #       #   
-    #       ##     ###              ###             #       #      #             #    #  #####   #                    #   ###        #      #   
-    #      #          #             # #              #       #      #            ######  #    #  #               #    #      ##      #      #   
-    #     #           #            #  ##             #       #      #            #    #  #    #  #               #####################      #   
-    #    #       #    #          ##                  #       #      #            #    #  #    #  #    #                                         
-    #    #       #    #                                                          #    #  #    #  #    #                    #                    
-  #####  ######   ####                                                           #    #  #####    ####                             #            
-                                                                                                                                                
-                                                                                                                                                
-                                                  
+                           ##   
+                          #     
+                           ##   
+                          #     
+                            #   
+                            #   
+    #                       #   
+     #              #       #   
+      #   ###        #      #   
+ #    #      ##      #      #   
+ #####################      #   
+                                
+           #                    
+                   #            
+                                
+                                
 ```
 
 ## How it Works
