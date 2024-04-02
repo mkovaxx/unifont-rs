@@ -1,6 +1,7 @@
 mod arabic;
 
 /// Preprocess a sequence of characters so that it may be rendered via Unifont.
+/// Currently supported scripts: Arabic.
 /// Works in place to avoid the need for allocation.
 pub fn preprocess_text(chars: &mut [char]) {
     // identify and process maximal spans of Arabic
