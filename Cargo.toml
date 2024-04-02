@@ -15,6 +15,3 @@ exclude = [".gitignore"]
 
 [dev-dependencies]
 clap = { version = "4.5.3", features = ["derive"] }
-
-[dependencies]
-unicode-bidi = "0.3.15"
