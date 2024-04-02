@@ -1,9 +1,9 @@
 [package]
 name = "unifont"
-version = "0.1.0"
+version = "1.0.0+data-15.1.05"
 edition = "2021"
 build = "build.rs"
-authors = ["Mate Kovacs <mkovaxx@gmail.com>"]
+authors = ["The Unifont-rs Contributors"]
 description = "Provides a monochrome Unicode bitmap font. Halfwidth glyphs are 8x16, fullwidth are 16x16 pixels."
 homepage = "https://github.com/mkovaxx/unifont-rs"
 repository = "https://github.com/mkovaxx/unifont-rs"
