@@ -1,14 +1,9 @@
-<<<<<<< HEAD
-use std::char::from_u32_unchecked;
-use std::mem::size_of_val;
-pub mod scripts;
-pub mod bidi;
-=======
 #![no_std]
 
+pub mod scripts;
+pub mod bidi;
 use core::char::from_u32_unchecked;
 use core::mem::size_of_val;
->>>>>>> main
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum Glyph {
