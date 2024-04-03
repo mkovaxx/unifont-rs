@@ -1,36 +1,19 @@
+extern crate alloc;
+use alloc::string::{String, ToString};
+use unicode_bidi::BidiInfo;
+
 mod arabic;
 
-/// Preprocess a sequence of characters so that it may be rendered via Unifont.
+/// Preprocess a line of text so that it may be rendered via Unifont.
 /// Currently supported scripts: Arabic.
-/// Works in place to avoid the need for allocation.
-pub fn preprocess_text(chars: &mut [char]) {
-    // identify and process maximal spans of Arabic
-    preprocess_arabic_text(chars);
-}
+pub fn preprocess_line(line: &str) -> String {
+    let text = arabic::use_contextual_forms(line);
 
-fn preprocess_arabic_text(chars: &mut [char]) {
-    use self::arabic::{fix_arabic_contextual_forms, is_arabic_letter};
+    // apply the BiDi algorithm, assuming that the text is a single line
+    let bidi_info = BidiInfo::new(&text, None);
+    let para = &bidi_info.paragraphs[0];
+    let line = para.range.clone();
+    let display = bidi_info.reorder_line(para, line);
 
-    // find maximal spans that consist of Arabic and whitespace
-    let spans = chars.split_mut(|c| !c.is_whitespace() && !is_arabic_letter(*c as u32));
-
-    for span in spans {
-        let trimmed = whitespace_trimmed(span);
-        fix_arabic_contextual_forms(trimmed);
-        trimmed.reverse();
-    }
-}
-
-fn whitespace_trimmed(chars: &mut [char]) -> &mut [char] {
-    let mut left = 0;
-    while left < chars.len() && chars[left].is_whitespace() {
-        left += 1;
-    }
-
-    let mut right = chars.len();
-    while right > left && chars[right - 1].is_whitespace() {
-        right -= 1;
-    }
-
-    &mut chars[left..right]
+    display.to_string()
 }

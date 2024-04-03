@@ -21,11 +21,10 @@ struct Args {
 fn main() {
     let args = Args::parse();
 
-    let mut chars: Vec<char> = args.text.chars().collect();
     // Prepare the character sequence for simple (glyph-by-glyph) rendering
-    unifont::i18n::preprocess_text(&mut chars);
+    let text = unifont::i18n::preprocess_line(&args.text);
 
-    let glyphs: Vec<&Glyph> = chars.into_iter().map(|c| get_glyph(c).unwrap()).collect();
+    let glyphs: Vec<&Glyph> = text.chars().map(|c| get_glyph(c).unwrap()).collect();
 
     for y in 0..16 {
         for glyph in &glyphs {

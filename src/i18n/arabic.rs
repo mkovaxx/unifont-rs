@@ -1,25 +1,33 @@
+extern crate alloc;
+use alloc::{string::String, vec};
+
 const NONE: u32 = u32::MAX;
 const AR_START: u32 = 0x621;
 const AR_END: u32 = 0x64A;
 const UNICODE_LAM: u32 = 0x644;
 
-pub fn fix_arabic_contextual_forms(chars: &mut [char]) {
-    let mut prev_char: char = '\0'; // Initial 'previous' character
+pub fn use_contextual_forms(input: &str) -> String {
+    let mut output = String::new();
 
-    for i in 0..chars.len() {
+    let mut chars = vec!['\0'];
+    chars.extend(input.chars());
+    chars.push('\0');
+
+    for i in 1..chars.len() - 1 {
+        let prev_char = chars[i - 1];
         let c = chars[i];
-        let next_char = chars.get(i + 1).copied().unwrap_or('\0'); // Use '\0' to represent the absence of a next character
+        let next_char = chars[i + 1];
 
         if let Some(transformed_cp) = get_contextual_form_of_char(prev_char, next_char, c) {
             if let Some(transformed_char) = core::char::from_u32(transformed_cp) {
-                chars[i] = transformed_char;
+                output.push(transformed_char);
             } else {
                 panic!("Invalid Unicode code point: {:X}", transformed_cp);
             }
         }
-
-        prev_char = c; // Update `next_char` for the next iteration
     }
+
+    output
 }
 
 // Arabic contextual forms [isolated, final, initial, medial, isolated_lam, final_lam]
@@ -104,7 +112,7 @@ fn get_contextual_form_of_char(prev: char, next: char, c: char) -> Option<u32> {
     }
 }
 
-pub fn is_arabic_letter(cp: u32) -> bool {
+fn is_arabic_letter(cp: u32) -> bool {
     cp >= AR_START && cp <= AR_END
 }
 
