@@ -15,7 +15,7 @@ exclude = [".gitignore"]
 build-std = ["core", "alloc"]
 
 [dev-dependencies]
+unicode-bidi = { version = "0.3.15", default-features = false, features = ["hardcoded-data"] }
 clap = { version = "4.5.3", features = ["derive"] }
 
 [dependencies]
-unicode-bidi = { version = "0.3.15", default-features = false, features = ["hardcoded-data"] }

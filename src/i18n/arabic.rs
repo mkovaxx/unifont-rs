@@ -6,7 +6,7 @@ const AR_START: u32 = 0x621;
 const AR_END: u32 = 0x64A;
 const UNICODE_LAM: u32 = 0x644;
 
-pub fn use_contextual_forms(input: &str) -> String {
+pub fn substitute_presentation_forms(input: &str) -> String {
     let mut output = String::new();
 
     let mut chars = vec!['\0'];
