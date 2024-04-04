@@ -10,7 +10,7 @@ Provides a monochrome bitmap font that covers the entire Unicode Basic Multiling
 - access to raw binary data
 - `#[no_std]` for embedded use
 - small memory footprint
-- i18n support
+- basic i18n support
 
 ## API
 
@@ -29,10 +29,8 @@ impl Glyph {
     fn is_fullwidth(&self) -> bool;
 }
 
-/// Preprocess a sequence of characters so that it may be rendered via Unifont.
-/// Currently supported scripts: Arabic.
-/// Works in place to avoid the need for allocation.
-fn preprocess_text(chars: &mut [char]);
+/// Preprocess text so that it may be rendered via Unifont.
+pub fn preprocess_text(text: &str) -> String;
 ```
 
 ## Example Code
