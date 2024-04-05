@@ -6,6 +6,7 @@ const AR_START: u32 = 0x621;
 const AR_END: u32 = 0x64A;
 const UNICODE_LAM: u32 = 0x644;
 
+/// See https://en.wikipedia.org/wiki/Arabic_Presentation_Forms-A
 pub fn substitute_presentation_forms(input: &str) -> String {
     let mut output = String::new();
 
