@@ -93,8 +93,16 @@ fn get_contextual_form_of_char(prev: char, next: char, c: char) -> Option<u32> {
     // The reference index now takes into account the special Lam-Alif combination.
     let ref_index = if is_la { next_cp } else { cp } - AR_START;
 
-    let target = ((((is_lapl || is_arabic_letter(next_cp)) && is_linking_type(cp)) as u32) << 1)
-        | is_linking_type(prev_cp) as u32;
+    let target = if is_lapl {
+        if is_linking_type(prev_cp) {
+            5 // Use final form
+        } else {
+            4 // Use isolated form
+        }
+    } else {
+        ((((is_arabic_letter(next_cp)) && is_linking_type(cp)) as u32) << 1)
+            | is_linking_type(prev_cp) as u32
+    };
 
     if let Some(form) = ARABIC_FORMS.get(ref_index as usize) {
         if is_lapl {
@@ -102,17 +110,17 @@ fn get_contextual_form_of_char(prev: char, next: char, c: char) -> Option<u32> {
                 // Already handled by is_la
                 return None;
             }
-            if form[5] == NONE {
+            if form[target as usize] == NONE {
                 return None;
             }
-            return form[5].into();
+            return form[target as usize].into();
         }
         return Some(form[target as usize]);
     } else {
         None // Form not found
     }
 }
-
+// NOTE: Will return false for all non-Arabic characters and all variations of the Lam-Alif combination.
 fn is_arabic_letter(cp: u32) -> bool {
     cp >= AR_START && cp <= AR_END
 }
