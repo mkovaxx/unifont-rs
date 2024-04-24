@@ -10,6 +10,7 @@ Provides a monochrome bitmap font that covers the entire Unicode Basic Multiling
 - access to raw binary data
 - `#[no_std]` for embedded use
 - small memory footprint
+- basic i18n support
 
 ## API
 
@@ -27,6 +28,9 @@ impl Glyph {
     fn get_width(&self) -> usize;
     fn is_fullwidth(&self) -> bool;
 }
+
+/// Preprocess text so that it may be rendered via Unifont.
+pub fn preprocess_text(text: &str) -> String;
 ```
 
 ## Example Code
@@ -56,6 +60,35 @@ It will produce the following output:
   ####   #    #   #####  #        ####   #    #     ##  
                                                         
                                                         
+```
+
+### i18n (Internationalization)
+
+Basic preprocessing is provided for displaying text in non-Latin scripts, such as Arabic.
+
+Try running the example as follows:
+```sh
+cargo run --example banner "أبجد"
+```
+
+It will produce the following output:
+```
+                           ##   
+                          #     
+                           ##   
+                          #     
+                            #   
+                            #   
+    #                       #   
+     #              #       #   
+      #   ###        #      #   
+ #    #      ##      #      #   
+ #####################      #   
+                                
+           #                    
+                   #            
+                                
+                                
 ```
 
 ## How it Works

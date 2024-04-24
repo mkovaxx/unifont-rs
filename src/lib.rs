@@ -1,5 +1,7 @@
 #![no_std]
 
+pub mod i18n;
+
 use core::char::from_u32_unchecked;
 use core::mem::size_of_val;
 

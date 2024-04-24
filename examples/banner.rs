@@ -1,4 +1,5 @@
 use clap::Parser;
+use unicode_bidi::BidiInfo;
 use unifont::{get_glyph, Glyph};
 
 /// Simple program to render a text banner
@@ -21,7 +22,16 @@ struct Args {
 fn main() {
     let args = Args::parse();
 
-    let glyphs: Vec<&Glyph> = args.text.chars().map(|c| get_glyph(c).unwrap()).collect();
+    // Prepare the character sequence for simple (glyph-by-glyph) rendering
+    let text = unifont::i18n::preprocess_text(&args.text);
+
+    // apply the BiDi algorithm, assuming that the text is a single line
+    let bidi_info = BidiInfo::new(&text, None);
+    let para = &bidi_info.paragraphs[0];
+    let line = para.range.clone();
+    let display = bidi_info.reorder_line(para, line);
+
+    let glyphs: Vec<&Glyph> = display.chars().map(|c| get_glyph(c).unwrap()).collect();
 
     for y in 0..16 {
         for glyph in &glyphs {
